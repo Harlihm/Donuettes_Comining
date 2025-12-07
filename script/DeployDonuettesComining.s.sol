@@ -28,14 +28,19 @@ contract DeployDonuettesComining is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
+        // Owner is the deployer address
+        address owner = vm.addr(deployerPrivateKey);
+
         DonuettesComining pool = new DonuettesComining(
             donuetteMinerAddress,
             donuette,
             donut,
-            provider
+            provider,
+            owner
         );
 
         console.log("DonuettesComining Pool deployed at:", address(pool));
+        console.log("Owner address:", owner);
 
         vm.stopBroadcast();
     }

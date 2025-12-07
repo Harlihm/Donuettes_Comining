@@ -75,7 +75,7 @@ Test these functions on the deployed contract:
 - [ ] `donuette()` → Returns Donuette token address
 - [ ] `donut()` → Returns DONUT token address
 - [ ] `provider()` → Returns provider address
-- [ ] `minDeposit()` → Returns `100000000000000000000` (100 DONUT)
+- [ ] `minDeposit()` → Returns `5000000000000000000` (5 DONUT)
 
 ## 📋 Save This Information
 

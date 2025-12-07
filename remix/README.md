@@ -122,7 +122,7 @@ After deployment, verify the contract:
 
 1. Check that `currentPoolId()` returns `1` (first pool is created automatically)
 2. Check that `miner()`, `donuette()`, `donut()`, and `provider()` return the correct addresses
-3. Check that `minDeposit()` returns `100000000000000000000` (100 DONUT with 18 decimals)
+3. Check that `minDeposit()` returns `5000000000000000000` (5 DONUT with 18 decimals)
 
 ## Troubleshooting
 

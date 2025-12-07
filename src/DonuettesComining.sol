@@ -102,8 +102,9 @@ contract DonuettesComining is ReentrancyGuard, Ownable {
         address _miner,
         address _donuette,
         address _donut,
-        address _provider
-    ) {
+        address _provider,
+        address _owner
+    ) Ownable(_owner) {
         miner = IDonuetteMiner(_miner);
         donuette = IDonuette(_donuette);
         donut = IERC20(_donut);
@@ -280,7 +281,6 @@ contract DonuettesComining is ReentrancyGuard, Ownable {
         
         // Track balances before mining
         uint256 donuetteBefore = 0;
-        uint256 donutBefore = donut.balanceOf(address(this));
         
         // If previous miner is this contract (one of our pools), track its donuette balance
         if (previousMiner == address(this) && previousPoolId > 0) {
@@ -288,7 +288,8 @@ contract DonuettesComining is ReentrancyGuard, Ownable {
         }
 
         // Approve and mine
-        donut.safeApprove(address(miner), currentPrice);
+        // Use forceApprove which handles reset automatically
+        donut.forceApprove(address(miner), currentPrice);
         
         uint256 pricePaid = miner.mine(
             address(this),
@@ -302,7 +303,6 @@ contract DonuettesComining is ReentrancyGuard, Ownable {
         // After mining, donuettes are minted to previousMiner and DONUT is transferred
         // The miner contract transfers 80% of pricePaid to previousMiner
         uint256 donuetteAfter = 0;
-        uint256 donutAfter = donut.balanceOf(address(this));
         
         // If previous miner was one of our pools, check what it received
         if (previousMiner == address(this) && previousPoolId > 0) {

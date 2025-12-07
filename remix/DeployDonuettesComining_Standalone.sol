@@ -12,9 +12,6 @@ pragma solidity ^0.8.19;
  * - DONUT Token: 0xae4a37d554c6d6f3e398546d8566b25052e0169c
  * - Provider: 0xD343e99D993b63B0b7d86320ae0611E3018E4e1f
  * 
- * DEPLOYED CONTRACT:
- * - DonuettesComining: 0x86353D8abEBb23C6ed041E029223A339C85AE11E
- * 
  * HOW TO USE:
  * 1. Make sure DonuettesComining.sol is compiled in Remix
  * 2. Deploy this helper contract (no constructor params needed)
@@ -22,10 +19,6 @@ pragma solidity ^0.8.19;
  * 4. Then deploy DonuettesComining directly with those addresses
  * 
  * OR use deployWithBytecode() if you have the compiled bytecode
- * 
- * TO UPDATE SETTINGS ON DEPLOYED CONTRACT:
- * Call updateSettings() on the deployed contract at 0x86353D8abEBb23C6ed041E029223A339C85AE11E
- * Parameters: (5 ether, 500, true, 1000 ether) for 5 DONUT min deposit
  */
 
 interface IDonuetteMiner {
@@ -49,14 +42,16 @@ contract DeployDonuettesCominingStandalone {
      * @return donuette Donuette token address
      * @return donut DONUT token address
      * @return provider Provider address
+     * @return owner Owner address (msg.sender when deploying)
      */
-    function getDeploymentParams() public pure returns (
+    function getDeploymentParams() public view returns (
         address miner,
         address donuette,
         address donut,
-        address provider
+        address provider,
+        address owner
     ) {
-        return (DONUETTE_MINER, DONUETTE_TOKEN, DONUT_TOKEN, PROVIDER);
+        return (DONUETTE_MINER, DONUETTE_TOKEN, DONUT_TOKEN, PROVIDER, msg.sender);
     }
     
     /**
@@ -85,7 +80,7 @@ contract DeployDonuettesCominingStandalone {
      * @return pool Address of the deployed contract
      */
     function deployWithBytecode(bytes memory bytecode) public returns (address pool) {
-        bytes memory constructorArgs = abi.encode(DONUETTE_MINER, DONUETTE_TOKEN, DONUT_TOKEN, PROVIDER);
+        bytes memory constructorArgs = abi.encode(DONUETTE_MINER, DONUETTE_TOKEN, DONUT_TOKEN, PROVIDER, msg.sender);
         bytes memory deploymentBytecode = abi.encodePacked(bytecode, constructorArgs);
         
         assembly {
@@ -105,9 +100,10 @@ contract DeployDonuettesCominingStandalone {
         address _miner,
         address _donuette,
         address _donut,
-        address _provider
+        address _provider,
+        address _owner
     ) public returns (address pool) {
-        bytes memory constructorArgs = abi.encode(_miner, _donuette, _donut, _provider);
+        bytes memory constructorArgs = abi.encode(_miner, _donuette, _donut, _provider, _owner);
         bytes memory deploymentBytecode = abi.encodePacked(bytecode, constructorArgs);
         
         assembly {
