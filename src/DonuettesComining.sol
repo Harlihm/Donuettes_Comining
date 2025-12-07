@@ -171,9 +171,35 @@ contract DonuettesComining is ReentrancyGuard, Ownable {
         pool.totalShares -= shares;
         pool.totalDeposited -= donutAmount;
 
+        // If user has no shares left, remove them from depositors array
+        if (pool.userShares[msg.sender] == 0) {
+            _removeDepositor(currentPoolId, msg.sender);
+        }
+
         donut.safeTransfer(msg.sender, donutAmount);
 
         emit Withdrawn(currentPoolId, msg.sender, donutAmount);
+    }
+
+    /**
+     * @notice Remove a depositor from the depositors array (gas efficient swap-and-pop)
+     * @param poolId Pool ID
+     * @param depositor Address to remove
+     */
+    function _removeDepositor(uint256 poolId, address depositor) internal {
+        Pool storage pool = pools[poolId];
+        address[] storage depositors = pool.depositors;
+        
+        // Find the index of the depositor
+        uint256 length = depositors.length;
+        for (uint256 i = 0; i < length; i++) {
+            if (depositors[i] == depositor) {
+                // Swap with last element and pop (gas efficient)
+                depositors[i] = depositors[length - 1];
+                depositors.pop();
+                break;
+            }
+        }
     }
 
     /**
