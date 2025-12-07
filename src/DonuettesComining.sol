@@ -83,7 +83,7 @@ contract DonuettesComining is ReentrancyGuard, Ownable {
     mapping(address => uint256[]) public userPoolIds;
 
     // Settings
-    uint256 public minDeposit = 100 ether; // 100 DONUT (using 18 decimals)
+    uint256 public minDeposit = 5 ether; // 5 DONUT (using 18 decimals)
     uint256 public maxPriceSlippage = 500; // 5%
     uint256 public constant DIVISOR = 10_000;
     bool public autoMineEnabled = true;
