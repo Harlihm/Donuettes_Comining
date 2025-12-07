@@ -1,0 +1,37 @@
+==========================================
+READY TO DEPLOY - COPY THESE VALUES
+==========================================
+
+Constructor Parameters for DonuettesComining:
+
+_miner:     0xe1f972216da2d14f0a0f6afb115940151b78decb
+_donuette:  0x89d326378b7f807d9e8cf06e921e99d6cb85bb0a
+_donut:     0xae4a37d554c6d6f3e398546d8566b25052e0169c
+_provider:  0xD343e99D993b63B0b7d86320ae0611E3018E4e1f
+
+==========================================
+STEP-BY-STEP IN REMIX:
+==========================================
+
+1. Go to remix.ethereum.org
+2. Create new file: DonuettesComining.sol
+3. Copy content from src/DonuettesComining.sol
+4. Compile with Solidity 0.8.19+
+5. Go to Deploy & Run Transactions
+6. Select "DonuettesComining" contract
+7. Paste the 4 addresses above in constructor
+8. Click Deploy!
+
+==========================================
+VERIFY AFTER DEPLOYMENT:
+==========================================
+
+Call these functions on deployed contract:
+- currentPoolId() → should return 1
+- miner() → should return 0xe1f972216da2d14f0a0f6afb115940151b78decb
+- donuette() → should return 0x89d326378b7f807d9e8cf06e921e99d6cb85bb0a
+- donut() → should return 0xae4a37d554c6d6f3e398546d8566b25052e0169c
+- provider() → should return 0xD343e99D993b63B0b7d86320ae0611E3018E4e1f
+
+==========================================
+
